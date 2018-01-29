@@ -8,7 +8,7 @@ app.get('/', (req, res) =>{
     res.sendFile(__dirname + '/views/home.html');
 });
 
-app.post('/', function (req, res) {
+app.get('/user-info', function (req, res) {
     res.send({userName:'Abelardo'})
 });
 
