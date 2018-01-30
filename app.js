@@ -8,11 +8,17 @@ app.get('/', (req, res) =>{
     res.sendFile(__dirname + '/views/home.html');
 });
 
-// templates
-app.get('/user-info', function (req, res) {
-    res.send({userName:'Abelardo'})
+// PROFILE
+app.get('/profile', (req, res) =>{
+    res.sendFile(__dirname + '/views/profile.html');
 });
 
+// DATA
+app.post('/user-info', function (req, res) {
+    res.sendFile(__dirname + '/test/json/test-user.json');
+});
+
+// templates
 app.post('/main-header', function (req, res) {
     res.sendFile(__dirname + '/views/templates/header.html');
 });
