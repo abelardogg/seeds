@@ -1,0 +1,34 @@
+[
+  {
+    "yardId":"0001",
+    "type":"nogal",
+    "quantity":200,
+    "area-quantity":1,
+    "area-unity":"km",
+    "description":"distintas variedades"
+  },
+  {
+    "yardId":"0002",
+    "type":"naranjo",
+    "quantity":50,
+    "area-quantity":500,
+    "area-unity":"m",
+    "description":"tamaño medio"
+  },
+  {
+    "yardId":"0003",
+    "type":"maiz",
+    "quantity":10000,
+    "area-quantity":5,
+    "area-unity":"km",
+    "description":"venta a fabrica"
+  },
+  {
+    "yardId":"0004",
+    "type":"maiz",
+    "quantity":500,
+    "area-quantity":2,
+    "area-unity":"km",
+    "description":"consumo personal"
+  }
+]

@@ -1,13 +1,12 @@
 $(document).ready(function () {
 
-    //getUserInfo();
     getHeader();
 });
 
 /**
  * GET user main info (Name, last name, city, etc.).
  */
-function getUserInfo(){
+function getUserBasicInfo(){
     const $xprssUserName = $('.xprss-user-name'),
         $xprssUserLastName = $('.xprss-user-last-name'),
         $xprssUserAge = $('.xprss-user-age'),
@@ -35,7 +34,7 @@ function getHeader() {
         $('#main-header').append(data);
         // console.log(data);
         hrefHandler();
-        getUserInfo();
+        getUserBasicInfo();
 
     });
 
