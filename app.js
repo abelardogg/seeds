@@ -1,5 +1,10 @@
 const express = require('express');
 const app = express();
+// test
+const testUser = require('./test/json/test-user.json');
+const testUserYard = require('./test/json/test-user-yards.json');
+const greeting = require('./private/test');
+
 
 // EJS engine
 app.set('view engine', 'ejs');
@@ -9,52 +14,13 @@ app.use(express.static('public'));
 // HOMEPAGE
 app.get('/', (req, res) =>{
 
-    let yards = [
-        {
-            "yardId":"0001",
-            "name":"Nogalera",
-            "type":"nogal",
-            "ubication":"Chihuahua",
-            "quantity":200,
-            "areaQuantity":1,
-            "areaUnity":"km",
-            "description":"distintas variedades"
-        },
-        {
-            "yardId":"0002",
-            "name":"Yum yum",
-            "type":"naranjo",
-            "ubication":"Puebla",
-            "quantity":50,
-            "areaQuantity":500,
-            "areaUnity":"m",
-            "description":"tamaño medio"
-        },
-        {
-            "yardId":"0003",
-            "name":"Good crops",
-            "type":"maiz",
-            "ubication":"Sinaloa",
-            "quantity":10000,
-            "areaQuantity":5,
-            "areaUnity":"km",
-            "description":"venta a fabrica"
-        },
-        {
-            "yardId":"0004",
-            "name":"Maizal",
-            "type":"maiz",
-            "ubication":"Chihuahua",
-            "quantity":500,
-            "areaQuantity":2,
-            "areaUnity":"km",
-            "description":"consumo personal"
-        }
-    ];
+    let g = greeting.sayHello('abe');
+    //console.log('test user',testUser);
+    console.log(g);
 
     res.render('pages/home',{
-        name:'abelardo',
-        yards : yards
+        user:testUser,
+        yards : testUserYard
     });
 });
 
