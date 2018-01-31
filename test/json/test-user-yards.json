@@ -1,7 +1,9 @@
 [
   {
     "yardId":"0001",
+    "name":"Nogalera",
     "type":"nogal",
+    "ubication":"Chihuahua",
     "quantity":200,
     "area-quantity":1,
     "area-unity":"km",
@@ -9,7 +11,9 @@
   },
   {
     "yardId":"0002",
+    "name":"Yum yum",
     "type":"naranjo",
+    "ubication":"Puebla",
     "quantity":50,
     "area-quantity":500,
     "area-unity":"m",
@@ -17,7 +21,9 @@
   },
   {
     "yardId":"0003",
+    "name":"Good crops",
     "type":"maiz",
+    "ubication":"Sinaloa",
     "quantity":10000,
     "area-quantity":5,
     "area-unity":"km",
@@ -25,7 +31,9 @@
   },
   {
     "yardId":"0004",
+    "name":"Maizal",
     "type":"maiz",
+    "ubication":"Chihuahua",
     "quantity":500,
     "area-quantity":2,
     "area-unity":"km",
