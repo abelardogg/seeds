@@ -1,10 +1,18 @@
 const express = require('express');
 const app = express();
+const mysql = require('mysql');
 // test
 const testUser = require('./test/json/test-user.json');
 const testUserYard = require('./test/json/test-user-yards.json');
 const greeting = require('./private/test');
 
+// mysql
+let connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "1234",
+    database: "seedstest"
+});
 
 // EJS engine
 app.set('view engine', 'ejs');
@@ -13,15 +21,25 @@ app.use(express.static('public'));
 
 // HOMEPAGE
 app.get('/', (req, res) =>{
+    let user = {};
+    let userName = '';
 
-    let g = greeting.sayHello('abe');
-    //console.log('test user',testUser);
-    console.log(g);
+    connection.connect();
 
-    res.render('pages/home',{
-        user:testUser,
-        yards : testUserYard
+    connection.query('SELECT * from users', function (error, results, fields) {
+        if (error) throw error;
+        user = results[1];
+        userName = user.first_name;
+        console.log(user);
+        console.log('OUTPUT: ',userName , typeof userName);
+
+        res.render('pages/home',{
+            user : userName,
+            yards : testUserYard
+        });
     });
+    connection.end();
+
 });
 
 // PROFILE
