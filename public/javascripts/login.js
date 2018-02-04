@@ -1,6 +1,6 @@
 $(document).ready(function () {
     let form = {};
-    
+
     $('#login-submit-button').on('click', function (e) {
 
         /**
@@ -9,13 +9,23 @@ $(document).ready(function () {
          * set cookies for testing purposes, remove this behaviour
          *
          */
-        document.cookie = "isLogged=true";
-        window.location.href = '/';
+        // document.cookie = "isLogged=true";
+        // window.location.href = '/';
 
 
         form = {
-            email : $('#login-email-input'),
-            pass : $('#login-password-input')
-        }
+            "email" : "dog",
+            "pass" : "dsadsa"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:3000/loginrequest',
+            success: function(d){console.log('ajax success', d)},
+            dataType: 'json'
+        });
+
+
+
     });
 });
