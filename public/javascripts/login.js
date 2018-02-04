@@ -14,15 +14,22 @@ $(document).ready(function () {
 
 
         form = {
-            "email" : "dog",
-            "pass" : "dsadsa"
+            "name" : "abel",
+            "last_name" : "gandara"
         };
 
         $.ajax({
             type: "POST",
-            url: 'http://localhost:3000/loginrequest',
-            success: function(d){console.log('ajax success', d)},
-            dataType: 'json'
+            data: JSON.stringify(form),
+            contentType: 'application/json',
+            url: '/loginrequest',
+            success: function(data){
+               // data = JSON.parse(data);
+                console.log(data);
+            },
+            error:function() {
+                console.log('error');
+            }
         });
 
 

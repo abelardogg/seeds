@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const multer = require('multer'); // v1.0.5
+const upload = multer(); // for parsing multipart/form-data
 const mysql = require('mysql');
 const cookieParser = require('cookie-parser');
 
@@ -22,7 +24,9 @@ app.use(express.static('public'));
 // ACCESS TO BROWSER COOKIES
 app.use(cookieParser());
 
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 
 // session validation
 app.all('*', (req, res, next) => {
@@ -58,9 +62,10 @@ app.get('/login', (req, res)=>{
     res.render('pages/login');
 });
 
-app.post('/loginrequest', (req, res) => {
-    console.log('hello');
-    res.json( JSON.stringify( {testData:'test'} ) )
+app.post('/loginrequest',upload.array(), (req, res) => {
+    let fullReq = req.body;
+    console.log(fullReq, typeof fullReq);
+    res.json(fullReq);
 });
 
 // HOMEPAGE
