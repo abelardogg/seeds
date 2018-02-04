@@ -26,8 +26,19 @@ $(document).ready(function () {
             contentType: 'application/json',
             url: '/loginrequest',
             success: function(data){
-               // data = JSON.parse(data);
+
                 console.log(data);
+
+                if(data.success==='true'){
+                    alert('login');
+
+                    document.cookie = "isLogged=true";
+                    document.izloggedzat = "isLogged="+data.sat+"";
+
+
+                } else {
+                    console.log('login failed');
+                }
             },
             error:function() {
                 console.log('error');

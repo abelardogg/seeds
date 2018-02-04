@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // session validation
 app.all('*', (req, res, next) => {
     let isLogged = req.cookies.isLogged;
+    let isLoggedSat = req.cookies.izloggedzat;
     /**
      * TODO sessions
      * Create session cookie
@@ -43,16 +44,11 @@ app.all('*', (req, res, next) => {
      */
 
     if ( isLogged === 'true' ) {
-        console.log('validation TRUE');
+
         next();
     } else if(req.path === '/loginrequest'){
-        console.log('validation TRUE 2');
-
         next();
-
     } else{
-        console.log('validation FALSE');
-
         res.render('pages/login');
     }
 });
@@ -64,20 +60,41 @@ app.get('/login', (req, res)=>{
 });
 
 app.post('/loginrequest',upload.array(), (req, res) => {
-    let reqFull = req.body;
+    // let reqFull = req.body;
     let reqEmail = req.body.email;
     let reqPass = req.body.pass;
-    let namePass = reqEmail+'SeeD'+reqPass;
 
-    console.log('email+pass: ', namePass, typeof namePass);
+    // let b = new Buffer(namePass);
+    // let encodedUser = b.toString('base64');
 
-    let b = new Buffer(namePass);
-    let encodedUser = b.toString('base64');
-
-    console.log('base64: ',encodedUser);
+    // console.log('base64: ',encodedUser);
 
 
-    res.send('true');
+    connection.query("select SA_token from seeds_accounts where SA_email = '"+reqEmail+"' and SA_pass = '"+reqPass+"';", function (error, results, fields) {
+        if (error) {
+            res.json({success:'false', message:'Server error'});
+            throw error;
+        }
+        // user = results[1];
+        // userName = user.user_first_name;
+
+        console.log('Results: ',results);
+
+        console.log('Results length: ',results.length);
+
+        if(results.length===1){
+            res.json({success:'true', sat:results[0].SA_token});
+        }
+        else {
+            res.json({success:'false', message:'Wrong email or password'});
+        }
+
+    });
+
+
+
+
+
 });
 
 // HOMEPAGE
@@ -85,10 +102,10 @@ app.get('/', (req, res) =>{
     let user = {};
     let userName = '';
 
-    connection.query('SELECT * from seeds_users_info', function (error, results, fields) {
+    connection.query('SELECT * from seeds_users', function (error, results, fields) {
         if (error) throw error;
-        user = results[1];
-        userName = user.user_first_name;
+        user = results[0];
+        userName = user.SU_name;
 
         res.render('pages/home',{
             user : userName,
