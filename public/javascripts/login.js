@@ -3,6 +3,8 @@ $(document).ready(function () {
 
     $('#login-submit-button').on('click', function (e) {
 
+        e.preventDefault();
+
         /**
          *
          * TODO REMOVE this
@@ -14,8 +16,8 @@ $(document).ready(function () {
 
 
         form = {
-            "name" : "abel",
-            "last_name" : "gandara"
+            "email" : $('#login-email-input').val(),
+            "pass" : $('#login-password-input').val()
         };
 
         $.ajax({

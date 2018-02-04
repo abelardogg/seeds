@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const multer = require('multer'); // v1.0.5
-const upload = multer(); // for parsing multipart/form-data
+const multer = require('multer');
+const upload = multer();
 const mysql = require('mysql');
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +24,7 @@ app.use(express.static('public'));
 // ACCESS TO BROWSER COOKIES
 app.use(cookieParser());
 
+// bodyparser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
@@ -63,9 +64,20 @@ app.get('/login', (req, res)=>{
 });
 
 app.post('/loginrequest',upload.array(), (req, res) => {
-    let fullReq = req.body;
-    console.log(fullReq, typeof fullReq);
-    res.json(fullReq);
+    let reqFull = req.body;
+    let reqEmail = req.body.email;
+    let reqPass = req.body.pass;
+    let namePass = reqEmail+'SeeD'+reqPass;
+
+    console.log('email+pass: ', namePass, typeof namePass);
+
+    let b = new Buffer(namePass);
+    let encodedUser = b.toString('base64');
+
+    console.log('base64: ',encodedUser);
+
+
+    res.send('true');
 });
 
 // HOMEPAGE
