@@ -108,17 +108,46 @@ app.post('/loginrequest',upload.array(), (req, res) => {
 
 // HOMEPAGE
 app.get('/', (req, res) =>{
-    let user = {};
-    let userName = '';
 
-    connection.query('SELECT * from seeds_users', function (error, results, fields) {
-        if (error) throw error;
-        user = results[0];
-        userName = user.SU_name;
+    let userTkn = req.cookies.izloggedzat;
+    let user = {},
+        userName = '',
+        yards = [];
+
+    connection.query('SELECT users.SU_name, users.SU_last_name, yards.SY_name, yards.SY_type \n' +
+        'FROM seeds_users AS users \n' +
+        'INNER JOIN seeds_yards AS yards \n' +
+        'ON users.SA_token = yards.SA_token\n' +
+        'WHERE users.SA_token=\'MFNBVGFiZUBtYWlsLmNvbQ==\';', function (error, results, fields) {
+        if (error) {
+            throw error;
+        }
+
+        let rows = results.length;
+
+        user.name = results[0].SU_name;
+        user.lastName = results[0].SU_last_name;
+
+        userName = user.name +' '+ user.lastName;
+
+        console.log('rows: ',rows);
+        for(let x = 0 ; x < rows ;  x++ ){
+            console.log('iteration: ',x);
+            console.log(results[x]);
+
+            yards.push({
+                name : results[x].SY_name,
+                type : results[x].SY_type,
+                ubication : '',
+                areaQuantity : '',
+                areaUnity : '',
+                description : ''
+            });
+        }
 
         res.render('pages/home',{
             user : userName,
-            yards : testUserYard
+            yards : yards
         });
     });
 });
