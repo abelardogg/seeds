@@ -33,8 +33,8 @@ $(document).ready(function () {
                     alert('login');
 
                     document.cookie = "isLogged=true";
-                    document.izloggedzat = "isLogged="+data.sat+"";
-
+                    document.cookie = "izloggedzat="+data.sat+"";
+                    location.reload();
 
                 } else {
                     console.log('login failed');

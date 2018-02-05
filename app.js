@@ -44,8 +44,28 @@ app.all('*', (req, res, next) => {
      */
 
     if ( isLogged === 'true' ) {
+        connection.query("select SU_name, SU_last_name from seeds_users where SA_token = '"+isLoggedSat+"';", function (error, results, fields) {
+            if (error) {
+                res.json({success:'false', message:'Server error'});
+                throw error;
+            }
+            console.log('Users returned: ',results.length);
+            console.log('User: ',results);
 
-        next();
+            if(results.length===1){
+                console.log('User exists, login success');
+                if(req.path === '/login'){
+                    res.redirect('/');
+                } else {
+                    next();
+                }
+            }
+            else {
+                console.log('User DON`T exists, login FAILED');
+                res.render('pages/login');
+            }
+        });
+
     } else if(req.path === '/loginrequest'){
         next();
     } else{
