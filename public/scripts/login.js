@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    //clear cookies
+    deleteCookie('isLogged');
+    deleteCookie('izloggedzat');
+
     let form = {};
 
     $('#login-submit-button').on('click', function (e) {
@@ -49,3 +53,5 @@ $(document).ready(function () {
 
     });
 });
+
+
