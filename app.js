@@ -6,10 +6,11 @@ const upload = multer();
 const mysql = require('mysql');
 const cookieParser = require('cookie-parser');
 
+const utils = require('./private/utils');
 // test
 const testUser = require('./test/json/test-user.json');
 const testUserYard = require('./test/json/test-user-yards.json');
-const greeting = require('./private/test');
+
 // mysql
 let connection = mysql.createConnection({
     host: "localhost",
@@ -31,17 +32,10 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 // session validation
 app.all('*', (req, res, next) => {
+
+    // LOGIN
     let isLogged = req.cookies.isLogged;
     let isLoggedSat = req.cookies.izloggedzat;
-    /**
-     * TODO sessions
-     * Create session cookie
-     * check if the isLogged cookies equals to TRUE
-     * check if the session cookie exists
-     *
-     * Use the cookie isLogged for testing.
-     *
-     */
 
     if ( isLogged === 'true' ) {
         connection.query("select SU_name, SU_last_name from seeds_users where SA_token = '"+isLoggedSat+"';", function (error, results, fields) {
@@ -49,8 +43,6 @@ app.all('*', (req, res, next) => {
                 res.json({success:'false', message:'Server error'});
                 throw error;
             }
-            console.log('Users returned: ',results.length);
-            console.log('User: ',results);
 
             if(results.length===1){
                 console.log('User exists, login success');
@@ -84,12 +76,6 @@ app.post('/loginrequest',upload.array(), (req, res) => {
     let reqEmail = req.body.email;
     let reqPass = req.body.pass;
 
-    // let b = new Buffer(namePass);
-    // let encodedUser = b.toString('base64');
-
-    // console.log('base64: ',encodedUser);
-
-
     connection.query("select SA_token from seeds_accounts where SA_email = '"+reqEmail+"' and SA_pass = '"+reqPass+"';", function (error, results, fields) {
         if (error) {
             res.json({success:'false', message:'Server error'});
@@ -103,6 +89,13 @@ app.post('/loginrequest',upload.array(), (req, res) => {
         console.log('Results length: ',results.length);
 
         if(results.length===1){
+            /**
+             * TODO POST the current date on success
+             *
+             * if the login is successful, insert the current date
+             * into SEEDS_SESSION table
+             *
+             */
             res.json({success:'true', sat:results[0].SA_token});
         }
         else {
@@ -110,10 +103,6 @@ app.post('/loginrequest',upload.array(), (req, res) => {
         }
 
     });
-
-
-
-
 
 });
 

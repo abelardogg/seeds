@@ -10,13 +10,12 @@ $(document).ready(function () {
         e.preventDefault();
 
         /**
+         * TODO POST date
+         * POST the current date to /loginrequest
          *
-         * TODO REMOVE this
-         * set cookies for testing purposes, remove this behaviour
+         * getCurrentDateJson()
          *
          */
-        // document.cookie = "isLogged=true";
-        // window.location.href = '/';
 
 
         form = {
