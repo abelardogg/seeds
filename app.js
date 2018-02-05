@@ -106,10 +106,33 @@ app.post('/loginrequest',upload.array(), (req, res) => {
 
 });
 
+// SIGNUP
 app.post('/signup', upload.array(), (req, res) =>{
-    let rqJson = req.body;
-    console.log(rqJson);
-    res.json(rqJson);
+    let newUserCredentials = req.body;
+    let newUserToken =' ';
+    console.log('new user credentials', newUserCredentials);
+
+    connection.query("select SA_id from seeds_accounts ORDER BY SA_id DESC LIMIT 1;", function (error, results, fields) {
+        let lastId = results[0].SA_id;
+
+        console.log('last id: ', lastId, typeof lastId);
+
+        newUserToken = utils.enconde64('SE'+(lastId+1)+'ED'+newUserCredentials.email);
+
+        console.log('new user token: ', newUserToken);
+
+        connection.query("INSERT INTO seeds_accounts (SA_token, SA_email, SA_pass, SA_date_created)\n" +
+            "VALUES ('"+newUserToken+"', '"+newUserCredentials.email+"','"+newUserCredentials.password+"', '"+newUserCredentials.date+"');", function (q2_error, q2_results, q2_fields) {
+
+            //console.log(rqJson);
+            res.status(200).json({success:'true'});
+        });
+
+
+
+    });
+
+
 });
 // HOMEPAGE
 app.get('/', (req, res) =>{

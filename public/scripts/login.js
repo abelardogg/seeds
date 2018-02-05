@@ -72,11 +72,10 @@ $(document).ready(function () {
         e.preventDefault();
         form = {
             email : $('#signup-email').val(),
-            name : $('#signup-name').val(),
-            lastName : $('#signup-last-name').val(),
-            password : $('#signup-password').val()
+            password : $('#signup-password').val(),
+            date : getCurrentDateJson()
         };
-        console.log(form);
+        // console.log(form);
 
         $.ajax({
             type: "POST",
@@ -84,7 +83,9 @@ $(document).ready(function () {
             contentType: 'application/json',
             url: '/signup',
             success: function(data){
-                console.log('success',data);
+                if(data.success === 'true'){
+                    alert('user crated');
+                }
             },
             error:function() {
                 console.log('error');
