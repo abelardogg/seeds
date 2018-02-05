@@ -1,4 +1,20 @@
 $(document).ready(function () {
+
+    $('.login-tab').on('click touchstart', function (e) {
+        e.preventDefault();
+        // console.log(e);
+        var $this=$(this);
+        var $target = $this.data('target');
+        //console.log($target);
+
+        $('.login-tab.active').removeClass('active');
+        $this.addClass('active');
+        $('.container').addClass('hidden');
+
+        $($target).removeClass('hidden');
+    });
+
+
     //clear cookies
     deleteCookie('isLogged');
     deleteCookie('izloggedzat');

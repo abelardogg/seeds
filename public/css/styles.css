@@ -4,3 +4,5 @@ body {
     /*background: linear-gradient(#101010, #a3a3a3) no-repeat fixed;*/
     /*background: linear-gradient(#001033, #001c65) no-repeat fixed;*/
 }
+
+.hidden{display: none;}
