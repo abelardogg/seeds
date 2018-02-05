@@ -13,14 +13,16 @@
 
 <% include ../templates/navbar %>
 
+<!-- TODO active tab LOGIN-->
 <div class="container-fluid">
     <ul class="nav nav-tabs">
-        <li class="login-tab active" data-target="#login-container"><a href="#">Login</a></li>
-        <li class="login-tab" data-target="#signup-container"><a href="#">Sign up</a></li>
+        <li class="login-tab" data-target="#login-container"><a href="#">Login</a></li>
+        <li class="login-tab active" data-target="#signup-container"><a href="#">Sign up</a></li>
     </ul>
 </div>
 
-<div id="login-container" class="container">
+
+<div id="login-container" class="container hidden">
     <div class="row" id="login-message">
         <div class="col-xs-12">
             <h2>Login</h2>
@@ -44,8 +46,8 @@
         </div>
     </div>
 </div>
-
-<div id="signup-container" class="container hidden">
+<!-- TODO hidden container signup-->
+<div id="signup-container" class="container">
     <div class="row" id="signup-message">
         <div class="col-xs-12">
             <h2>Welcome to seeds</h2>
@@ -56,26 +58,27 @@
         <form>
             <div class="form-group col-xs-12">
                 <label for="signup-email">Email address</label>
-                <input type="email" class="form-control" id="signup-email" placeholder="my_mail@mail.com">
+                <input value="abel@gmail.com" type="email" class="form-control" id="signup-email" placeholder="my_mail@mail.com">
             </div>
 
-            <div class="form-group col-xs-12 col-sm-4">
+            <div class="form-group col-xs-12 col-sm-6">
                 <label for="signup-name">Name</label>
-                <input type="text" class="form-control" id="signup-name" placeholder="Cherryl">
+                <input value="Abel" type="text" class="form-control" id="signup-name" placeholder="Cherryl">
             </div>
-            <div class="form-group col-xs-12 col-sm-4">
+            <div class="form-group col-xs-12 col-sm-6">
                 <label for="signup-last-name">Last name</label>
-                <input type="text" class="form-control" id="signup-last-name" placeholder="McTree">
+                <input value="Gandara Gonzalez" type="text" class="form-control" id="signup-last-name" placeholder="McTree">
             </div>
 
             <div class="form-group col-xs-12">
-                <label for="signup-pass">Email address</label>
+                <label for="signup-password">password</label>
                 <!--TODO change type to password-->
-                <input type="text" class="form-control" id="signup-pass" placeholder="my_mail@mail.com">
+                <input value="qwerty" type="text" class="form-control" id="signup-password" placeholder="my_mail@mail.com">
             </div>
 
             <div class="col-xs-12">
-                <button class="btn btn-default">Submit</button>
+                <!-- TODO add disabled attribute-->
+                <button type="submit" id="signup-submit-button" class="btn btn-default">Submit</button>
             </div>
         </form>
     </div>

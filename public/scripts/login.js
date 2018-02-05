@@ -67,6 +67,31 @@ $(document).ready(function () {
 
 
     });
+
+    $('#signup-submit-button').on('click', function (e) {
+        e.preventDefault();
+        form = {
+            email : $('#signup-email').val(),
+            name : $('#signup-name').val(),
+            lastName : $('#signup-last-name').val(),
+            password : $('#signup-password').val()
+        };
+        console.log(form);
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(form),
+            contentType: 'application/json',
+            url: '/signup',
+            success: function(data){
+                console.log('success',data);
+            },
+            error:function() {
+                console.log('error');
+            }
+        });
+
+    });
 });
 
 

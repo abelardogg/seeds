@@ -58,7 +58,7 @@ app.all('*', (req, res, next) => {
             }
         });
 
-    } else if(req.path === '/loginrequest'){
+    } else if(req.path === '/loginrequest' || req.path === '/signup'){
         next();
     } else{
         res.render('pages/login');
@@ -106,6 +106,11 @@ app.post('/loginrequest',upload.array(), (req, res) => {
 
 });
 
+app.post('/signup', upload.array(), (req, res) =>{
+    let rqJson = req.body;
+    console.log(rqJson);
+    res.json(rqJson);
+});
 // HOMEPAGE
 app.get('/', (req, res) =>{
 
