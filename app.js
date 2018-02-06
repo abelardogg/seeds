@@ -159,41 +159,58 @@ app.get('/', (req, res) =>{
         userName = '',
         yards = [];
 
-    connection.query('SELECT users.SU_name, users.SU_last_name, yards.SY_name, yards.SY_type \n' +
-        'FROM seeds_users AS users \n' +
-        'INNER JOIN seeds_yards AS yards \n' +
-        'ON users.SA_token = yards.SA_token\n' +
-        'WHERE users.SA_token=\'MFNBVGFiZUBtYWlsLmNvbQ==\';', function (error, results, fields) {
+    console.log('tok', userTkn);
+
+    connection.query("SELECT users.SU_name, users.SU_last_name, yards.SY_name, yards.SY_type \n" +
+        "FROM seeds_users AS users \n" +
+        "INNER JOIN seeds_yards AS yards \n" +
+        "ON users.SA_token = yards.SA_token\n" +
+        "WHERE users.SA_token='"+userTkn+"';", function (error, results, fields) {
         if (error) {
             throw error;
         }
+        console.log(results);
 
-        let rows = results.length;
+        if (results.length === 0) {
+            connection.query("select * from seeds_users where SA_token='"+userTkn+"';", function (err, results, fields) {
+                user.name = results[0].SU_name;
+                user.lastName = results[0].SU_last_name;
 
-        user.name = results[0].SU_name;
-        user.lastName = results[0].SU_last_name;
+                userName = user.name +' '+ user.lastName;
 
-        userName = user.name +' '+ user.lastName;
-
-        console.log('rows: ',rows);
-        for(let x = 0 ; x < rows ;  x++ ){
-            console.log('iteration: ',x);
-            console.log(results[x]);
-
-            yards.push({
-                name : results[x].SY_name,
-                type : results[x].SY_type,
-                ubication : '',
-                areaQuantity : '',
-                areaUnity : '',
-                description : ''
+                res.render('pages/home',{
+                    user : userName,
+                    yards : yards
+                });
             });
-        }
+        } else {
+            let rows = results.length;
 
-        res.render('pages/home',{
-            user : userName,
-            yards : yards
-        });
+            user.name = results[0].SU_name;
+            user.lastName = results[0].SU_last_name;
+
+            userName = user.name + ' ' + user.lastName;
+
+            console.log('rows: ', rows);
+            for (let x = 0; x < rows; x++) {
+                console.log('iteration: ', x);
+                console.log(results[x]);
+
+                yards.push({
+                    name: results[x].SY_name,
+                    type: results[x].SY_type,
+                    ubication: '',
+                    areaQuantity: '',
+                    areaUnity: '',
+                    description: ''
+                });
+            }
+            res.render('pages/home', {
+                user: userName,
+                yards: yards
+            });
+
+        }
     });
 });
 
