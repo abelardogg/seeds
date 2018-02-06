@@ -113,6 +113,10 @@ app.post('/signup', upload.array(), (req, res) =>{
     console.log('new user credentials', newUserCredentials);
 
     connection.query("select SA_id from seeds_accounts ORDER BY SA_id DESC LIMIT 1;", function (error, results, fields) {
+        if (error) {
+            res.json({success:'false', message:'Server error'});
+            throw error;
+        }
         let lastId = results[0].SA_id;
 
         console.log('last id: ', lastId, typeof lastId);
@@ -123,9 +127,22 @@ app.post('/signup', upload.array(), (req, res) =>{
 
         connection.query("INSERT INTO seeds_accounts (SA_token, SA_email, SA_pass, SA_date_created)\n" +
             "VALUES ('"+newUserToken+"', '"+newUserCredentials.email+"','"+newUserCredentials.password+"', '"+newUserCredentials.date+"');", function (q2_error, q2_results, q2_fields) {
+            if (q2_error) {
+                res.json({success:'false', message:'Server error'});
+                throw q2_error;
+            }
+            console.log('new account done');
 
-            //console.log(rqJson);
-            res.status(200).json({success:'true'});
+            connection.query("INSERT INTO seeds_users (SA_token, SU_name, SU_last_name)\n" +
+                "VALUES ('"+newUserToken+"', 'New User', '');", function (q3_error, q3_results, q3_fields) {
+                if (q3_error) {
+                    res.json({success:'false', message:'Server error'});
+                    throw q3_error;
+                }
+                console.log('new user done');
+                res.status(200).json({success:'true',message:'new user created'});
+            });
+
         });
 
 
