@@ -216,11 +216,46 @@ app.get('/', (req, res) =>{
 
 // PROFILE
 app.get('/profile', (req, res) =>{
-    res.render('pages/profile');
+    let userTkn = req.cookies.izloggedzat;
+    let user = {},
+        userName = '',
+        location='N/A';
+
+        connection.query("select * from seeds_users where SA_token='"+userTkn+"';", function (err, results, fields) {
+            user.name = results[0].SU_name;
+            user.lastName = results[0].SU_last_name;
+
+            userName = user.name +' '+ user.lastName;
+
+            res.render('pages/profile',{
+                user : userName,
+                location : location
+            });
+        });
 });
 
 app.get('/yards', (req, res) =>{
-    res.render('pages/yards');
+    let userTkn = req.cookies.izloggedzat;
+
+    let yards = [];
+    connection.query("select * from seeds_yards where SA_token='"+userTkn+"';", function (err, results, fields) {
+        let rows = results.length;
+
+        for( let i = 0; i < rows ; i++ ){
+            yards.push({
+                name: results[i].SY_name,
+                type: results[i].SY_type,
+                ubication: '',
+                areaQuantity: '',
+                areaUnity: '',
+                description: ''
+            });
+        }
+
+        res.render('pages/yards',{
+            yards : yards
+        });
+    });
 });
 
 

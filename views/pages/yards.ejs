@@ -14,8 +14,18 @@
 <% include ../templates/navbar %>
 
 <div class="container">
-    <div id="welcome-message" style="text-align: center;">
-        <h1>My yards</h1>
+    <div id="welcome-message" class="row" style="text-align: center;">
+        <div class="col-xs-12">
+            <h1>My yards</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <% yards.forEach(function(yard) { %>
+        <div class="col-xs-3">
+            <% include ../templates/card %>
+        </div>
+        <% }); %>
     </div>
 </div>
 
